@@ -26,22 +26,25 @@ The project follows dbt's recommended layered architecture:
 
 ## 🚀 Quick Start
 
-1. **Install dependencies:**
-   ```bash
-   pip install dbt-core dbt-duckdb
-   ```
-
-2. **Navigate to project:**
+1. **Navigate to project:**
    ```bash
    cd sentry-span-metrics-dbt/sentry_span_metrics
    ```
 
-3. **Run the project:**
+2. **Run the project (using the provided script):**
    ```bash
-   dbt seed    # Load sample data
-   dbt run     # Build all models
-   dbt test    # Run data quality tests
-   dbt docs generate && dbt docs serve  # View documentation
+   ./dbt-run.sh seed           # Load sample data
+   ./dbt-run.sh run            # Build all models
+   ./dbt-run.sh test           # Run data quality tests
+   ./dbt-run.sh docs generate  # Generate documentation
+   ./dbt-run.sh docs serve     # View documentation (optional)
+   ```
+
+   **Or use full dbt path directly:**
+   ```bash
+   /Users/kpujji/Library/Python/3.9/bin/dbt seed
+   /Users/kpujji/Library/Python/3.9/bin/dbt run
+   /Users/kpujji/Library/Python/3.9/bin/dbt test
    ```
 
 ## 📊 Sample Output
