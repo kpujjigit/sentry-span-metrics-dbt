@@ -1,0 +1,15 @@
+version: 2
+
+macros:
+  - name: test_unique
+    description: "Test that a column contains unique values"
+    arguments:
+      - name: model
+        type: string
+      - name: column_name
+        type: string
+    test_sql: |
+      select {{ column_name }}, count(*) as duplicate_count
+      from {{ model }}
+      group by {{ column_name }}
+      having count(*) > 1

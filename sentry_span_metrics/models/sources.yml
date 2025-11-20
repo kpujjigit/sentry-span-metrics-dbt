@@ -1,0 +1,110 @@
+version: 2
+
+sources:
+  - name: sentry
+    description: "Sentry performance monitoring and error tracking platform"
+    database: sentry
+    schema: public
+    freshness:
+      warn_after:
+        count: 1
+        period: hour
+      error_after:
+        count: 6
+        period: hour
+
+    loaded_at_field: loaded_at
+
+    tables:
+      - name: spans
+        description: "Performance monitoring spans from Sentry API"
+        columns:
+          - name: span_id
+            description: "Unique identifier for the span"
+            tests:
+              - unique
+              - not_null
+          - name: trace_id
+            description: "Identifier for the trace containing this span"
+            tests:
+              - not_null
+          - name: operation_name
+            description: "Name of the operation being performed"
+            tests:
+              - not_null
+          - name: start_timestamp
+            description: "When the span started"
+            tests:
+              - not_null
+          - name: end_timestamp
+            description: "When the span ended"
+            tests:
+              - not_null
+          - name: duration_ms
+            description: "Duration of the span in milliseconds"
+            tests:
+              - not_null
+          - name: status
+            description: "Status of the span execution"
+            tests:
+              - accepted_values:
+                  values: ['ok', 'error']
+          - name: service_name
+            description: "Name of the service that executed this span"
+            tests:
+              - not_null
+
+      - name: events
+        description: "User interaction events from the application"
+        columns:
+          - name: event_id
+            description: "Unique identifier for the event"
+            tests:
+              - unique
+              - not_null
+          - name: user_id
+            description: "ID of the user who triggered the event"
+            tests:
+              - not_null
+          - name: event_type
+            description: "Type of event (page_view, button_click, form_submit)"
+            tests:
+              - accepted_values:
+                  values: ['page_view', 'button_click', 'form_submit']
+          - name: timestamp
+            description: "When the event occurred"
+            tests:
+              - not_null
+          - name: session_id
+            description: "Unique identifier for the user session"
+            tests:
+              - not_null
+
+  - name: user_database
+    description: "Internal user management database"
+    database: users
+    schema: public
+
+    tables:
+      - name: users
+        description: "User profile and account information"
+        columns:
+          - name: user_id
+            description: "Unique identifier for the user"
+            tests:
+              - unique
+              - not_null
+          - name: email
+            description: "User's email address"
+            tests:
+              - unique
+              - not_null
+          - name: signup_date
+            description: "Date when the user created their account"
+            tests:
+              - not_null
+          - name: subscription_tier
+            description: "User's subscription level"
+            tests:
+              - accepted_values:
+                  values: ['basic', 'premium']

@@ -1,0 +1,17 @@
+version: 2
+
+macros:
+  - name: test_accepted_values
+    description: "Test that a column only contains accepted values"
+    arguments:
+      - name: model
+        type: string
+      - name: column_name
+        type: string
+      - name: values
+        type: list
+    test_sql: |
+      select {{ column_name }}, count(*) as invalid_count
+      from {{ model }}
+      where {{ column_name }} not in {{ values | join(', ') }}
+      group by {{ column_name }}

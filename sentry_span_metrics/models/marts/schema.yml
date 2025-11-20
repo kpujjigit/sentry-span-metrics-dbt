@@ -1,0 +1,101 @@
+version: 2
+
+models:
+  - name: user_engagement
+    description: "Daily user engagement metrics combining event and span data"
+    columns:
+      - name: date
+        description: "Date of the metrics"
+        tests:
+          - unique
+          - not_null
+      - name: active_users
+        description: "Number of unique users with activity on this date"
+      - name: premium_active_users
+        description: "Number of premium users active on this date"
+      - name: basic_active_users
+        description: "Number of basic users active on this date"
+      - name: total_events
+        description: "Total number of events recorded"
+      - name: total_page_views
+        description: "Total page view events"
+      - name: total_button_clicks
+        description: "Total button click events"
+      - name: total_form_submits
+        description: "Total form submission events"
+      - name: total_sessions
+        description: "Total unique sessions"
+      - name: avg_session_duration
+        description: "Average duration of sessions in milliseconds"
+      - name: countries_represented
+        description: "Number of different countries with active users"
+      - name: total_spans
+        description: "Total number of spans recorded"
+      - name: total_traces
+        description: "Total number of unique traces"
+      - name: total_span_duration_ms
+        description: "Total duration of all spans in milliseconds"
+      - name: avg_span_duration_ms
+        description: "Average span duration in milliseconds"
+      - name: successful_spans
+        description: "Number of successful spans"
+      - name: web_requests
+        description: "Number of web request spans"
+      - name: database_calls
+        description: "Number of database operation spans"
+      - name: cache_operations
+        description: "Number of cache operation spans"
+      - name: users_with_spans
+        description: "Number of unique users with span data"
+      - name: span_success_rate
+        description: "Rate of successful spans (0.0 to 1.0)"
+      - name: avg_events_per_session
+        description: "Average number of events per session"
+
+  - name: span_volume_daily
+    description: "Daily span performance metrics by service and operation"
+    columns:
+      - name: date
+        description: "Date of the span metrics"
+        tests:
+          - not_null
+      - name: service_name
+        description: "Name of the service generating the spans"
+        tests:
+          - not_null
+      - name: total_spans
+        description: "Total number of spans for this service on this date"
+      - name: total_duration_ms
+        description: "Total duration of all spans in milliseconds"
+      - name: avg_span_duration
+        description: "Average span duration in milliseconds"
+      - name: min_span_duration
+        description: "Minimum span duration in milliseconds"
+      - name: max_span_duration
+        description: "Maximum span duration in milliseconds"
+      - name: avg_p95_duration
+        description: "Average 95th percentile span duration"
+      - name: avg_p99_duration
+        description: "Average 99th percentile span duration"
+      - name: total_successful_spans
+        description: "Number of successful spans"
+      - name: total_failed_spans
+        description: "Number of failed spans"
+      - name: total_unique_traces
+        description: "Number of unique traces"
+      - name: total_unique_users
+        description: "Number of unique users affected by spans"
+      - name: unique_operations
+        description: "Number of unique operations performed"
+      - name: error_rate
+        description: "Rate of failed spans (0.0 to 1.0)"
+      - name: performance_category
+        description: "Performance classification based on duration"
+        tests:
+          - accepted_values:
+              values: ['fast', 'normal', 'slow', 'very_slow']
+      - name: reliability_category
+        description: "Reliability classification based on error rate"
+        tests:
+          - accepted_values:
+              values: ['excellent', 'good', 'concerning', 'critical']

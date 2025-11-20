@@ -1,0 +1,143 @@
+version: 2
+
+models:
+  - name: stg_users
+    description: "Cleaned and standardized user data from the users seed"
+    columns:
+      - name: user_id
+        description: "Unique identifier for each user"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Full name of the user"
+        tests:
+          - not_null
+      - name: email
+        description: "User's email address (lowercased)"
+        tests:
+          - not_null
+          - unique
+      - name: signup_date
+        description: "Date when the user signed up"
+        tests:
+          - not_null
+      - name: country
+        description: "User's country code (uppercased)"
+        tests:
+          - accepted_values:
+              values: ['US', 'CA', 'UK', 'AU', 'DE', 'FR', 'JP', 'BR', 'MX', 'IN', 'ES', 'NL', 'SE', 'NO', 'DK', 'FI', 'CH', 'AT', 'BE', 'PT']
+      - name: subscription_tier
+        description: "User's subscription level"
+        tests:
+          - accepted_values:
+              values: ['basic', 'premium']
+      - name: is_premium_user
+        description: "Boolean flag indicating if user has premium subscription"
+      - name: signup_month
+        description: "Month when the user signed up (truncated)"
+
+  - name: stg_events
+    description: "Cleaned and standardized event data from user interactions"
+    columns:
+      - name: event_id
+        description: "Unique identifier for each event"
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        description: "ID of the user who triggered the event"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: event_type
+        description: "Type of event (page_view, button_click, form_submit)"
+        tests:
+          - accepted_values:
+              values: ['page_view', 'button_click', 'form_submit']
+      - name: event_name
+        description: "Specific name of the event"
+        tests:
+          - not_null
+      - name: event_timestamp
+        description: "Timestamp when the event occurred"
+        tests:
+          - not_null
+      - name: page_url
+        description: "URL of the page where the event occurred"
+      - name: session_id
+        description: "Unique identifier for the user session"
+        tests:
+          - not_null
+      - name: duration_ms
+        description: "Duration of the event in milliseconds"
+      - name: event_date
+        description: "Date of the event (derived from timestamp)"
+      - name: event_hour
+        description: "Hour of the event (0-23)"
+      - name: is_page_view
+        description: "Boolean flag for page view events"
+      - name: is_button_click
+        description: "Boolean flag for button click events"
+      - name: is_form_submit
+        description: "Boolean flag for form submit events"
+
+  - name: stg_spans
+    description: "Cleaned and standardized Sentry span performance data"
+    columns:
+      - name: span_id
+        description: "Unique identifier for each span"
+        tests:
+          - unique
+          - not_null
+      - name: trace_id
+        description: "Identifier for the trace this span belongs to"
+        tests:
+          - not_null
+      - name: parent_span_id
+        description: "ID of the parent span (null for root spans)"
+      - name: operation_name
+        description: "Name of the operation being traced"
+        tests:
+          - not_null
+      - name: start_timestamp
+        description: "When the span started"
+        tests:
+          - not_null
+      - name: end_timestamp
+        description: "When the span ended"
+        tests:
+          - not_null
+      - name: duration_ms
+        description: "Duration of the span in milliseconds"
+        tests:
+          - not_null
+      - name: status
+        description: "Status of the span execution"
+        tests:
+          - accepted_values:
+              values: ['ok', 'error']
+      - name: service_name
+        description: "Name of the service that executed this span"
+        tests:
+          - not_null
+      - name: user_id
+        description: "ID of the user associated with this span"
+      - name: tags
+        description: "Additional metadata tags for the span"
+      - name: span_date
+        description: "Date of the span (derived from start_timestamp)"
+      - name: span_hour
+        description: "Hour of the span (0-23)"
+      - name: is_success
+        description: "Boolean flag indicating successful span execution"
+      - name: is_root_span
+        description: "Boolean flag for root spans (no parent)"
+      - name: is_web_request
+        description: "Boolean flag for web server spans"
+      - name: is_database_call
+        description: "Boolean flag for database operation spans"
+      - name: is_cache_operation
+        description: "Boolean flag for cache operation spans"

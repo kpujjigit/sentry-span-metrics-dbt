@@ -1,0 +1,73 @@
+version: 2
+
+exposures:
+  - name: user_analytics_dashboard
+    description: "Product team's user engagement dashboard in Tableau"
+    type: dashboard
+    maturity: high
+    url: https://tableau.company.com/dashboards/user-engagement
+    owner:
+      name: Product Analytics Team
+      email: product-analytics@company.com
+
+    depends_on:
+      - ref('user_engagement')
+      - ref('int_user_activity')
+
+    meta:
+      refresh_cadence: daily
+      business_owner: sarah.johnson@company.com
+      data_sensitivity: internal
+
+  - name: system_performance_monitor
+    description: "Infrastructure team's system performance monitoring dashboard"
+    type: dashboard
+    maturity: high
+    url: https://grafana.company.com/dashboards/system-performance
+    owner:
+      name: Infrastructure Team
+      email: infra@company.com
+
+    depends_on:
+      - ref('span_volume_daily')
+      - ref('stg_spans')
+
+    meta:
+      refresh_cadence: hourly
+      business_owner: mike.davis@company.com
+      data_sensitivity: internal
+      alerts_enabled: true
+
+  - name: executive_summary_report
+    description: "Weekly executive summary report on product metrics"
+    type: analysis
+    maturity: medium
+    url: https://reports.company.com/executive-summary
+    owner:
+      name: Executive Team
+      email: executives@company.com
+
+    depends_on:
+      - ref('user_engagement')
+
+    meta:
+      refresh_cadence: weekly
+      business_owner: jane.smith@company.com
+      data_sensitivity: confidential
+
+  - name: api_performance_alerts
+    description: "Automated alerts for API performance degradation"
+    type: ml
+    maturity: medium
+    url: https://alerts.company.com/api-performance
+    owner:
+      name: DevOps Team
+      email: devops@company.com
+
+    depends_on:
+      - ref('span_volume_daily')
+
+    meta:
+      refresh_cadence: real-time
+      business_owner: alex.chen@company.com
+      data_sensitivity: internal

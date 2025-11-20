@@ -1,0 +1,21 @@
+user_id,name,email,signup_date,country,subscription_tier
+1,Alice Johnson,alice.johnson@example.com,2023-01-15,US,premium
+2,Bob Smith,bob.smith@example.com,2023-02-20,CA,basic
+3,Carol Davis,carol.davis@example.com,2023-03-10,UK,premium
+4,David Wilson,david.wilson@example.com,2023-04-05,AU,basic
+5,Eva Brown,eva.brown@example.com,2023-05-12,DE,premium
+6,Frank Miller,frank.miller@example.com,2023-06-18,FR,basic
+7,Grace Lee,grace.lee@example.com,2023-07-22,JP,premium
+8,Henry Taylor,henry.taylor@example.com,2023-08-30,BR,basic
+9,Isabella Garcia,isabella.garcia@example.com,2023-09-14,MX,premium
+10,Jack Anderson,jack.anderson@example.com,2023-10-08,IN,basic
+11,Kate Martinez,kate.martinez@example.com,2023-11-25,ES,premium
+12,Liam Thompson,liam.thompson@example.com,2023-12-03,NL,basic
+13,Mia White,mia.white@example.com,2024-01-17,SE,premium
+14,Noah Johnson,noah.johnson@example.com,2024-02-28,NO,basic
+15,Olivia Davis,olivia.davis@example.com,2024-03-15,DK,premium
+16,Peter Wilson,peter.wilson@example.com,2024-04-22,FI,basic
+17,Quinn Brown,quinn.brown@example.com,2024-05-09,CH,premium
+18,Ryan Miller,ryan.miller@example.com,2024-06-14,AT,basic
+19,Sarah Lee,sarah.lee@example.com,2024-07-21,BE,premium
+20,Thomas Taylor,thomas.taylor@example.com,2024-08-18,PT,basic

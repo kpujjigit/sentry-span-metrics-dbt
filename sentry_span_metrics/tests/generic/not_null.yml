@@ -1,0 +1,14 @@
+version: 2
+
+macros:
+  - name: test_not_null
+    description: "Test that a column does not contain null values"
+    arguments:
+      - name: model
+        type: string
+      - name: column_name
+        type: string
+    test_sql: |
+      select count(*) as null_count
+      from {{ model }}
+      where {{ column_name }} is null
